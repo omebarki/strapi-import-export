@@ -15,6 +15,7 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useSlug } from '../../hooks/useSlug';
 import { dataFormatConfigs, dataFormats } from '../../utils/dataFormats';
 import { handleRequestErr } from '../../utils/error';
+import { getAuthHeaders } from '../../utils/auth';
 import { Editor } from '../Editor';
 
 const DEFAULT_OPTIONS = {
@@ -60,7 +61,7 @@ export const ExportModal = ({ availableExportFormats = [dataFormats.CSV, dataFor
           deepness: options.deepness,
           exportPluginsContentTypes: options.exportPluginsContentTypes,
         }
-      });
+      }, { headers: getAuthHeaders() });
       setData(res.data);
     } catch (err) {
       console.log('err', err);

@@ -5,6 +5,7 @@ import { PLUGIN_ID } from '../../../../pluginId'; // Ensure PLUGIN_ID is correct
 
 import { useForm } from '../../../../hooks/useForm';
 import { useI18n } from '../../../../hooks/useI18n';
+import { getAuthHeaders } from '../../../../utils/auth';
 import { Editor } from '../../../Editor/Editor';
 
 export const ImportEditor = ({ file, data, dataFormat, slug, onDataChanged, onOptionsChanged }) => {
@@ -19,7 +20,7 @@ export const ImportEditor = ({ file, data, dataFormat, slug, onDataChanged, onOp
       const { get } = fetchClient;
       console.log('slug', slug);
       try {
-        const resData = await get(`/${PLUGIN_ID}/import/model-attributes/${slug}`);
+        const resData = await get(`/${PLUGIN_ID}/import/model-attributes/${slug}`, { headers: getAuthHeaders() });
         console.log('resData', resData);
         setAttributeNames(resData?.data?.data?.attribute_names);
       } catch (error) {

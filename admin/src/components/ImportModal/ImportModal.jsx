@@ -70,6 +70,7 @@ import { useI18n } from '../../hooks/useI18n';
 import { useSlug } from '../../hooks/useSlug';
 import { dataFormats } from '../../utils/dataFormats.js';
 import { handleRequestErr } from '../../utils/error.js';
+import { getAuthHeaders } from '../../utils/auth';
 import getTrad from '../../utils/getTrad';
 
 import { Editor } from '../Editor/Editor.jsx';
@@ -147,12 +148,8 @@ export const ImportModal = ({ onClose }) => {
     try {
       const { post } = fetchClient;
       const res = await post(`/${PLUGIN_ID}/import`, {
-        // body: JSON.stringify({ slug, data, format: dataFormat, ...options }),
         data:{ slug, data, format: dataFormat, ...options },
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-      });
+      }, { headers: getAuthHeaders() });
 
       const { failures } = res;
       if (!failures.length) {
